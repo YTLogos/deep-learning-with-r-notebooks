@@ -11,6 +11,7 @@ This repository contains R Markdown notebooks implementing the code samples foun
 | 3.5: Classifying movie reviews: a binary classification example | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.5-classifying-movie-reviews.nb.html) | [R Markdown (Rmd)](notebooks/3.5-classifying-movie-reviews.Rmd)  |
 | 3.6: Classifying newswires: a multi-class classification example | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.6-classifying-newswires.nb.html) | [R Markdown (Rmd)](notebooks/3.6-classifying-newswires.Rmd)  |
 | 3.7: Predicting house prices: a regression example | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.7-predicting-house-prices.nb.html) | [R Markdown (Rmd)](notebooks/3.7-predicting-house-prices.Rmd)  |
+| 4.4: Overfitting and underfitting | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/4.4-overfitting-and-underfitting.nb.html) | [R Markdown (Rmd)](notebooks/4.4-overfitting-and-underfitting.Rmd)  |
 | 5.1: Introduction to convnets | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/5.1-introduction-to-convnets.nb.html) | [R Markdown (Rmd)](notebooks/5.1-introduction-to-convnets.Rmd)  |
 
 
