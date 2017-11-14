@@ -60,26 +60,11 @@ y_test <- as.numeric(test_labels)
 ## Reducing the network's size
 
 
-The simplest way to prevent overfitting is to reduce the size of the model, i.e. the number of learnable parameters in the model (which is 
-determined by the number of layers and the number of units per layer). In deep learning, the number of learnable parameters in a model is 
-often referred to as the model's "capacity". Intuitively, a model with more parameters will have more "memorization capacity" and therefore 
-will be able to easily learn a perfect dictionary-like mapping between training samples and their targets, a mapping without any 
-generalization power. For instance, a model with 500,000 binary parameters could easily be made to learn the class of every digits in the 
-MNIST training set: we would only need 10 binary parameters for each of the 50,000 digits. Such a model would be useless for classifying 
-new digit samples. Always keep this in mind: deep learning models tend to be good at fitting to the training data, but the real challenge 
-is generalization, not fitting.
+The simplest way to prevent overfitting is to reduce the size of the model, i.e. the number of learnable parameters in the model (which is determined by the number of layers and the number of units per layer). In deep learning, the number of learnable parameters in a model is often referred to as the model's "capacity". Intuitively, a model with more parameters will have more "memorization capacity" and therefore will be able to easily learn a perfect dictionary-like mapping between training samples and their targets, a mapping without any generalization power. For instance, a model with 500,000 binary parameters could easily be made to learn the class of every digits in the MNIST training set: we would only need 10 binary parameters for each of the 50,000 digits. Such a model would be useless for classifying new digit samples. Always keep this in mind: deep learning models tend to be good at fitting to the training data, but the real challenge is generalization, not fitting.
 
-On the other hand, if the network has limited memorization resources, it will not be able to learn this mapping as easily, and thus, in 
-order to minimize its loss, it will have to resort to learning compressed representations that have predictive power regarding the targets 
--- precisely the type of representations that we are interested in. At the same time, keep in mind that you should be using models that have 
-enough parameters that they won't be underfitting: your model shouldn't be starved for memorization resources. There is a compromise to be 
-found between "too much capacity" and "not enough capacity".
+On the other hand, if the network has limited memorization resources, it will not be able to learn this mapping as easily, and thus, in order to minimize its loss, it will have to resort to learning compressed representations that have predictive power regarding the targets -- precisely the type of representations that we are interested in. At the same time, keep in mind that you should be using models that have enough parameters that they won't be underfitting: your model shouldn't be starved for memorization resources. There is a compromise to be found between "too much capacity" and "not enough capacity".
 
-Unfortunately, there is no magical formula to determine what the right number of layers is, or what the right size for each layer is. You 
-will have to evaluate an array of different architectures (on your validation set, not on your test set, of course) in order to find the 
-right model size for your data. The general workflow to find an appropriate model size is to start with relatively few layers and 
-parameters, and start increasing the size of the layers or adding new layers until you see diminishing returns with regard to the 
-validation loss.
+Unfortunately, there is no magical formula to determine what the right number of layers is, or what the right size for each layer is. You will have to evaluate an array of different architectures (on your validation set, not on your test set, of course) in order to find the right model size for your data. The general workflow to find an appropriate model size is to start with relatively few layers and parameters, and start increasing the size of the layers or adding new layers until you see diminishing returns with regard to the validation loss.
 
 Let's try this on our movie review classification network. Our original network was as such:
 
@@ -150,8 +135,7 @@ val_loss %>%
   geom_line()
 ```
 
-As you can see, the smaller network starts overfitting later than the reference one and its performance 
-degrades much more slowly once it starts overfitting.
+As you can see, the smaller network starts overfitting later than the reference one and its performance degrades much more slowly once it starts overfitting.
 
 Now, for kicks, let's add to this benchmark a network that has much more capacity, far more than the problem would warrant:
 
@@ -192,8 +176,7 @@ val_loss %>%
   geom_line()
 ```
 
-The bigger network starts overfitting almost right away, after just one epoch, and overfits much more severely. Its validation loss is also 
-more noisy.
+The bigger network starts overfitting almost right away, after just one epoch, and overfits much more severely. Its validation loss is also more noisy.
 
 Meanwhile, here are the training losses for our two networks:
 
@@ -210,32 +193,19 @@ train_loss %>%
   geom_line()
 ```
 
-As you can see, the bigger network gets its training loss near zero very quickly. The more capacity the network has, the quicker it will be 
-able to model the training data (resulting in a low training loss), but the more susceptible it is to overfitting (resulting in a large 
-difference between the training and validation loss).
+As you can see, the bigger network gets its training loss near zero very quickly. The more capacity the network has, the quicker it will be able to model the training data (resulting in a low training loss), but the more susceptible it is to overfitting (resulting in a large difference between the training and validation loss).
 
 ## Adding weight regularization
 
 
-You may be familiar with _Occam's Razor_ principle: given two explanations for something, the explanation most likely to be correct is the 
-"simplest" one, the one that makes the least amount of assumptions. This also applies to the models learned by neural networks: given some 
-training data and a network architecture, there are multiple sets of weights values (multiple _models_) that could explain the data, and 
-simpler models are less likely to overfit than complex ones.
+You may be familiar with _Occam's Razor_ principle: given two explanations for something, the explanation most likely to be correct is the "simplest" one, the one that makes the least amount of assumptions. This also applies to the models learned by neural networks: given some training data and a network architecture, there are multiple sets of weights values (multiple _models_) that could explain the data, and simpler models are less likely to overfit than complex ones.
 
-A "simple model" in this context is a model where the distribution of parameter values has less entropy (or a model with fewer 
-parameters altogether, as we saw in the section above). Thus a common way to mitigate overfitting is to put constraints on the complexity 
-of a network by forcing its weights to only take small values, which makes the distribution of weight values more "regular". This is called 
-"weight regularization", and it is done by adding to the loss function of the network a _cost_ associated with having large weights. This 
-cost comes in two flavors:
+A "simple model" in this context is a model where the distribution of parameter values has less entropy (or a model with fewer parameters altogether, as we saw in the section above). Thus a common way to mitigate overfitting is to put constraints on the complexity of a network by forcing its weights to only take small values, which makes the distribution of weight values more "regular". This is called "weight regularization", and it is done by adding to the loss function of the network a _cost_ associated with having large weights. This cost comes in two flavors:
 
-* L1 regularization, where the cost added is proportional to the _absolute value of the weights coefficients_ (i.e. to what is called the 
-"L1 norm" of the weights).
-* L2 regularization, where the cost added is proportional to the _square of the value of the weights coefficients_ (i.e. to what is called 
-the "L2 norm" of the weights). L2 regularization is also called _weight decay_ in the context of neural networks. Don't let the different 
-name confuse you: weight decay is mathematically the exact same as L2 regularization.
+* L1 regularization, where the cost added is proportional to the _absolute value of the weights coefficients_ (i.e. to what is called the "L1 norm" of the weights).
+* L2 regularization, where the cost added is proportional to the _square of the value of the weights coefficients_ (i.e. to what is called the "L2 norm" of the weights). L2 regularization is also called _weight decay_ in the context of neural networks. Don't let the different name confuse you: weight decay is mathematically the exact same as L2 regularization.
 
-In Keras, weight regularization is added by passing _weight regularizer instances_ to layers as keyword arguments. Let's add L2 weight 
-regularization to our movie review classification network:
+In Keras, weight regularization is added by passing _weight regularizer instances_ to layers as keyword arguments. Let's add L2 weight regularization to our movie review classification network:
 
 ```{r}
 l2_model <- keras_model_sequential() %>% 
@@ -244,9 +214,7 @@ l2_model <- keras_model_sequential() %>%
   layer_dense(units = 16, kernel_regularizer = regularizer_l2(0.001),
               activation = "relu") %>% 
   layer_dense(units = 1, activation = "sigmoid")
-```
 
-```{r}
 l2_model %>% compile(
   optimizer = "rmsprop",
   loss = "binary_crossentropy",
@@ -254,9 +222,7 @@ l2_model %>% compile(
 )
 ```
 
-`regularizer_l2(0.001)` means every coefficient in the weight matrix of the layer will add `0.001 * weight_coefficient_value` to the total loss of 
-the network. Note that because this penalty is _only added at training time_, the loss for this network will be much higher at training 
-than at test time. 
+`regularizer_l2(0.001)` means every coefficient in the weight matrix of the layer will add `0.001 * weight_coefficient_value` to the total loss of the network. Note that because this penalty is _only added at training time_, the loss for this network will be much higher at training than at test time. 
 
 Here's the impact of our L2 regularization penalty:
 
@@ -282,8 +248,7 @@ val_loss %>%
   geom_line()
 ```
 
-As you can see, the model with L2 regularization has become much more resistant to overfitting than the reference model,
-even though both models have the same number of parameters.
+As you can see, the model with L2 regularization has become much more resistant to overfitting than the reference model, even though both models have the same number of parameters.
 
 As alternatives to L2 regularization, you could use one of the following Keras weight regularizers:
 
@@ -303,16 +268,14 @@ layer_output <- layer_output * sample(0:1, length(layer_output),
                                       replace = TRUE)  
 ```
 
-At test time, we would be scaling the output down by the dropout rate. Here we scale by 0.5 (because we were previous dropping half the 
-units):
+At test time, we would be scaling the output down by the dropout rate. Here we scale by 0.5 (because we were previous dropping half the units):
 
 ```{r, eval=FALSE}
 # At test time:
 layer_output <- layer_output * 0.5 
 ```
 
-Note that this process can be implemented by doing both operations at training time and leaving the output unchanged at test time, which is 
-often the way it is implemented in practice:
+Note that this process can be implemented by doing both operations at training time and leaving the output unchanged at test time, which is often the way it is implemented in practice:
 
 ```{r, eval=FALSE}
 # At training time:
@@ -323,14 +286,9 @@ layer_output <- layer_output * sample(0:1, length(layer_output),
 layer_output <- layer_output / 0.5
 ```
 
-This technique may seem strange and arbitrary. Why would this help reduce overfitting? Geoff Hinton has said that he was inspired, among 
-other things, by a fraud prevention mechanism used by banks -- in his own words: _"I went to my bank. The tellers kept changing and I asked 
-one of them why. He said he didn’t know but they got moved around a lot. I figured it must be because it would require cooperation 
-between employees to successfully defraud the bank. This made me realize that randomly removing a different subset of neurons on each 
-example would prevent conspiracies and thus reduce overfitting"_.
+This technique may seem strange and arbitrary. Why would this help reduce overfitting? Geoff Hinton has said that he was inspired, among other things, by a fraud prevention mechanism used by banks -- in his own words: _"I went to my bank. The tellers kept changing and I asked one of them why. He said he didn’t know but they got moved around a lot. I figured it must be because it would require cooperation between employees to successfully defraud the bank. This made me realize that randomly removing a different subset of neurons on each example would prevent conspiracies and thus reduce overfitting"_.
 
-The core idea is that introducing noise in the output values of a layer can break up happenstance patterns that are not significant (what 
-Hinton refers to as "conspiracies"), which the network would start memorizing if no noise was present. 
+The core idea is that introducing noise in the output values of a layer can break up happenstance patterns that are not significant (what Hinton refers to as "conspiracies"), which the network would start memorizing if no noise was present. 
 
 In Keras, you can introduce dropout in a network via `layer_dropout()`, which is applied to the output of layer right before it:
 
