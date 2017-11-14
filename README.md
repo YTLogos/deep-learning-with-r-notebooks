@@ -9,6 +9,9 @@ This repository contains R Markdown notebooks implementing the code samples foun
 | ------------- | ------------- | ------------- |
 | 2.1: A first look at a neural network | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/2.1-a-first-look-at-a-neural-network.nb.html) | [R Markdown (Rmd)](notebooks/2.1-a-first-look-at-a-neural-network.Rmd)  |
 | 3.5: Classifying movie reviews: a binary classification example | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.5-classifying-movie-reviews.nb.html) | [R Markdown (Rmd)](notebooks/3.5-classifying-movie-reviews.Rmd)  |
+| 3.6: Classifying newswires: a multi-class classification example | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.6-classifying-newswires.nb.html) | [R Markdown (Rmd)](notebooks/3.6-classifying-newswires.Rmd)  |
+
+
 
 
 
