@@ -47,10 +47,6 @@ str(train_images)
 str(train_labels)
 ```
 
-```{r}
-train_labels
-```
-
 Let's have a look at the test data:
 
 ```{r}
@@ -123,7 +119,7 @@ test_labels <- to_categorical(test_labels)
 We are now ready to train our network, which in Keras is done via a call to the `fit` method of the network: 
 we "fit" the model to its training data.
 
-```{r, results='hide'}
+```{r, echo=TRUE, results='hide'}
 network %>% fit(train_images, train_labels, epochs = 5, batch_size = 128)
 ```
 
@@ -137,13 +133,7 @@ metrics <- network %>% evaluate(test_images, test_labels, verbose = 0)
 metrics
 ```
 
-Our test set accuracy turns out to be 98.1% -- that's quite a bit lower than the training set accuracy. 
-This gap between training accuracy and test accuracy is an example of "overfitting", 
-the fact that machine learning models tend to perform worse on new data than on their training data. 
-Overfitting will be a central topic in chapter 3.
+Our test set accuracy turns out to be 98.1% -- that's quite a bit lower than the training set accuracy. This gap between training accuracy and test accuracy is an example of "overfitting", the fact that machine learning models tend to perform worse on new data than on their training data. Overfitting will be a central topic in chapter 3.
 
-This concludes our first example -- you just saw how you can build and a train a neural network to classify handwritten digits in 
-less than 20 lines of R code. In the next chapter, we'll go into detail about every moving piece we just previewed and clarify what's  
-going on behind the scenes. You'll learn about tensors, the data-storing objects going into the network; about tensor operations, which 
-layers are made of; and about gradient descent, which allows your network to learn from its training examples.
+This concludes our first example -- you just saw how you can build and a train a neural network to classify handwritten digits in less than 20 lines of R code. In the next chapter, we'll go into detail about every moving piece we just previewed and clarify what's going on behind the scenes. You'll learn about tensors, the data-storing objects going into the network; about tensor operations, which layers are made of; and about gradient descent, which allows your network to learn from its training examples.
 
