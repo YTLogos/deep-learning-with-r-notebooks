@@ -11,9 +11,9 @@ This repository contains R Markdown notebooks implementing the code samples foun
 
 
 
-### LICENSE
+## LICENSE
 
-```
+<pre>
 MIT License
 
 Copyright (c) 2017 François Chollet
@@ -35,7 +35,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-```
+</pre>
 
 <!---
 
