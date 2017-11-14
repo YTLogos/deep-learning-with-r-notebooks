@@ -297,7 +297,7 @@ regularizer_l1_l2(l1 = 0.001, l2 = 0.001)
 
 ## Adding dropout
 
-```{r}
+```{r, eval=FALSE}
 # At training time: we drop out 50% of the units in the output
 layer_output <- layer_output * sample(0:1, length(layer_output),
                                       replace = TRUE)  
@@ -306,7 +306,7 @@ layer_output <- layer_output * sample(0:1, length(layer_output),
 At test time, we would be scaling the output down by the dropout rate. Here we scale by 0.5 (because we were previous dropping half the 
 units):
 
-```{r}
+```{r, eval=FALSE}
 # At test time:
 layer_output <- layer_output * 0.5 
 ```
@@ -314,7 +314,7 @@ layer_output <- layer_output * 0.5
 Note that this process can be implemented by doing both operations at training time and leaving the output unchanged at test time, which is 
 often the way it is implemented in practice:
 
-```{r}
+```{r, eval=FALSE}
 # At training time:
 layer_output <- layer_output * sample(0:1, length(layer_output),
                                       replace = TRUE) 
