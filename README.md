@@ -13,11 +13,7 @@ This repository contains R Markdown notebooks implementing the code samples foun
 | 3.7: Predicting house prices: a regression example | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.7-predicting-house-prices.nb.html) | [R Markdown (Rmd)](notebooks/3.7-predicting-house-prices.Rmd)  |
 | 4.4: Overfitting and underfitting | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/4.4-overfitting-and-underfitting.nb.html) | [R Markdown (Rmd)](notebooks/4.4-overfitting-and-underfitting.Rmd)  |
 | 5.1: Introduction to convnets | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/5.1-introduction-to-convnets.nb.html) | [R Markdown (Rmd)](notebooks/5.1-introduction-to-convnets.Rmd)  |
-
-
-
-
-
+| 5.2: Using convnets with small datasets | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/5.2-using-convnets-with-small-datasets.nb.html) | [R Markdown (Rmd)](notebooks/5.2-using-convnets-with-small-datasets.Rmd)  |
 
 
 
