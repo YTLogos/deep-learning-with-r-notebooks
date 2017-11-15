@@ -69,8 +69,6 @@ Unfortunately, there is no magical formula to determine what the right number of
 Let's try this on our movie review classification network. Our original network was as such:
 
 ```{r}
-library(keras)
-
 original_model <- keras_model_sequential() %>% 
   layer_dense(units = 16, activation = "relu", input_shape = c(10000)) %>% 
   layer_dense(units = 16, activation = "relu") %>% 
@@ -98,7 +96,7 @@ smaller_model %>% compile(
 )
 ```
 
-Here's a comparison of the validation losses of the original network and the smaller network:
+Let's train both the original and smaller network:
 
 ```{r, echo=FALSE, results='hide'}
 original_hist <- original_model %>% fit(
@@ -118,22 +116,32 @@ smaller_model_hist <- smaller_model %>% fit(
 )
 ```
 
-```{r}
-val_loss <- data.frame(
-  epoch = seq_along(original_hist$metrics$val_loss),
-  original_model = original_hist$metrics$val_loss,
-  smaller_model = smaller_model_hist$metrics$val_loss
-)
-```
+
+To compare the losses we'll write an R function that takes a named list of loss series and plots it:
 
 ```{r}
 library(ggplot2)
 library(tidyr)
-val_loss %>% 
-  gather(model, loss, original_model, smaller_model) %>% 
-  ggplot(aes(x = epoch, y = loss, colour = model)) +
-  geom_line()
+plot_training_losses <- function(losses) {
+  loss_names <- names(losses)
+  losses <- as.data.frame(losses)
+  losses$epoch <- seq_len(nrow(losses))
+  losses %>% 
+    gather(model, loss, loss_names[[1]], loss_names[[2]]) %>% 
+    ggplot(aes(x = epoch, y = loss, colour = model)) +
+    geom_point()
+}
+````
+
+Here's a comparison of the validation losses of the original network and the smaller network:
+
+```{r}
+plot_training_losses(losses = list(
+  original_model = original_hist$metrics$val_loss,
+  smaller_model = smaller_model_hist$metrics$val_loss
+))
 ```
+
 
 As you can see, the smaller network starts overfitting later than the reference one and its performance degrades much more slowly once it starts overfitting.
 
@@ -164,16 +172,10 @@ bigger_model_hist <- bigger_model %>% fit(
 Here's how the bigger network fares compared to the reference one:
 
 ```{r}
-val_loss <- data.frame(
-  epoch = seq_along(original_hist$metrics$val_loss),
+plot_training_losses(losses = list(
   original_model = original_hist$metrics$val_loss,
   bigger_model = bigger_model_hist$metrics$val_loss
-)
-
-val_loss %>% 
-  gather(model, loss, original_model, bigger_model) %>% 
-  ggplot(aes(x = epoch, y = loss, colour = model)) +
-  geom_line()
+))
 ```
 
 The bigger network starts overfitting almost right away, after just one epoch, and overfits much more severely. Its validation loss is also more noisy.
@@ -181,16 +183,10 @@ The bigger network starts overfitting almost right away, after just one epoch, a
 Meanwhile, here are the training losses for our two networks:
 
 ```{r}
-train_loss <- data.frame(
-  epoch = seq_along(original_hist$metrics$loss),
+plot_training_losses(losses = list(
   original_model = original_hist$metrics$loss,
   bigger_model = bigger_model_hist$metrics$loss
-)
-
-train_loss %>% 
-  gather(model, loss, original_model, bigger_model) %>% 
-  ggplot(aes(x = epoch, y = loss, colour = model)) +
-  geom_line()
+))
 ```
 
 As you can see, the bigger network gets its training loss near zero very quickly. The more capacity the network has, the quicker it will be able to model the training data (resulting in a low training loss), but the more susceptible it is to overfitting (resulting in a large difference between the training and validation loss).
@@ -236,16 +232,10 @@ l2_model_hist <- l2_model %>% fit(
 ```
 
 ```{r}
-val_loss <- data.frame(
-  epoch = seq_along(original_hist$metrics$val_loss),
+plot_training_losses(losses = list(
   original_model = original_hist$metrics$val_loss,
   l2_model = l2_model_hist$metrics$val_loss
-)
-
-val_loss %>% 
-  gather(model, loss, original_model, l2_model) %>% 
-  ggplot(aes(x = epoch, y = loss, colour = model)) +
-  geom_line()
+))
 ```
 
 As you can see, the model with L2 regularization has become much more resistant to overfitting than the reference model, even though both models have the same number of parameters.
@@ -326,16 +316,10 @@ dpt_model_hist <- dpt_model %>% fit(
 Let's plot the results:
 
 ```{r}
-val_loss <- data.frame(
-  epoch = seq_along(original_hist$metrics$val_loss),
+plot_training_losses(losses = list(
   original_model = original_hist$metrics$val_loss,
   dpt_model = dpt_model_hist$metrics$val_loss
-)
-
-val_loss %>% 
-  gather(model, loss, original_model, dpt_model) %>% 
-  ggplot(aes(x = epoch, y = loss, colour = model)) +
-  geom_line()
+))
 ```
 
 Again, a clear improvement over the reference network.
