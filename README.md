@@ -15,10 +15,9 @@ This repository contains R Markdown notebooks implementing the code samples foun
 | 5.1: Introduction to convnets | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/5.1-introduction-to-convnets.nb.html) | [R Markdown (Rmd)](notebooks/5.1-introduction-to-convnets.Rmd)  |
 | 5.2: Using convnets with small datasets | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/5.2-using-convnets-with-small-datasets.nb.html) | [R Markdown (Rmd)](notebooks/5.2-using-convnets-with-small-datasets.Rmd)  |
 | 5.3: Using a pre-trained convnet | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/5.3-using-a-pretrained-convnet.nb.html) | [R Markdown (Rmd)](notebooks/5.3-using-a-pretrained-convnet.Rmd)  |
+| 5.4: Visualizing what convnets learn | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/5.4-visualizing-what-convnets-learn.nb.html) | [R Markdown (Rmd)](notebooks/5.4-visualizing-what-convnets-learn.Rmd)  |
 | 6.1: One-hot encoding of words or characters | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-one-hot-encoding-of-words-or-characters.nb.html) | [R Markdown (Rmd)](notebooks/6.1-one-hot-encoding-of-words-or-characters.Rmd)  |
 | 6.1: Using word embeddings | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-using-word-embeddings.nb.html) | [R Markdown (Rmd)](notebooks/6.1-using-word-embeddings.Rmd)  |
-
-
 
 ## LICENSE
 
