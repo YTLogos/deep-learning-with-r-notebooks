@@ -18,6 +18,11 @@ This repository contains R Markdown notebooks implementing the code samples foun
 | 5.4: Visualizing what convnets learn | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/5.4-visualizing-what-convnets-learn.nb.html) | [R Markdown (Rmd)](notebooks/5.4-visualizing-what-convnets-learn.Rmd)  |
 | 6.1: One-hot encoding of words or characters | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-one-hot-encoding-of-words-or-characters.nb.html) | [R Markdown (Rmd)](notebooks/6.1-one-hot-encoding-of-words-or-characters.Rmd)  |
 | 6.1: Using word embeddings | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-using-word-embeddings.nb.html) | [R Markdown (Rmd)](notebooks/6.1-using-word-embeddings.Rmd)  |
+| 6.2: Understanding recurrent neural networks | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.2-understanding-recurrent-neural-networks.nb.html) | [R Markdown (Rmd)](notebooks/6.2-understanding-recurrent-neural-networks.Rmd)  |
+
+
+
+
 
 ## LICENSE
 
