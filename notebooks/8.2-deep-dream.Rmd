@@ -16,7 +16,6 @@ This notebook contains the code samples found in Chapter 8, Section 2 of [Deep L
 
 ***
 
-
 ## Implementing Deep Dream in Keras
 
 We will start from a convnet pre-trained on ImageNet. In Keras, we have many such convnets available: VGG16, VGG19, Xception, ResNet50... albeit the same process is doable with any of these, your convnet of choice will naturally affect your visualizations, since different convnet architectures result in different learned features. The convnet used in the original Deep Dream release was an Inception model, and in practice Inception is known to produce very nice-looking Deep Dreams, so we will use the InceptionV3 model that comes with Keras.
