@@ -24,7 +24,7 @@ This repository contains R Markdown notebooks implementing the code samples foun
 | 8.1: Text generation with LSTM | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/8.1-text-generation-with-lstm.nb.html) | [R Markdown (Rmd)](notebooks/8.1-text-generation-with-lstm.Rmd)  |
 | 8.2: Deep Dream | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/8.2-deep-dream.nb.html) | [R Markdown (Rmd)](notebooks/8.2-deep-dream.Rmd)  |
 | 8.3: Neural style transfer | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/8.3-neural-style-transfer.nb.html) | [R Markdown (Rmd)](notebooks/8.3-neural-style-transfer.Rmd)  |
-
+| 8.4: Generating images | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/8.4-generating-images-with-vaes.nb.html) | [R Markdown (Rmd)](notebooks/8.4-generating-images-with-vaes.Rmd)  |
 
 
 ## LICENSE
