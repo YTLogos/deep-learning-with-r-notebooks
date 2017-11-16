@@ -19,9 +19,8 @@ This repository contains R Markdown notebooks implementing the code samples foun
 | 6.1: One-hot encoding of words or characters | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-one-hot-encoding-of-words-or-characters.nb.html) | [R Markdown (Rmd)](notebooks/6.1-one-hot-encoding-of-words-or-characters.Rmd)  |
 | 6.1: Using word embeddings | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-using-word-embeddings.nb.html) | [R Markdown (Rmd)](notebooks/6.1-using-word-embeddings.Rmd)  |
 | 6.2: Understanding recurrent neural networks | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.2-understanding-recurrent-neural-networks.nb.html) | [R Markdown (Rmd)](notebooks/6.2-understanding-recurrent-neural-networks.Rmd)  |
-
-
-
+| 6.4: Sequence processing with convnets | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.4-sequence-processing-with-convnets.nb.html) | [R Markdown (Rmd)](notebooks/6.4-sequence-processing-with-convnets.Rmd)  |
+| 8.1: Text generation with LSTM | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/8.1-text-generation-with-lstm.nb.html) | [R Markdown (Rmd)](notebooks/8.1-text-generation-with-lstm.Rmd)  |
 
 
 ## LICENSE
