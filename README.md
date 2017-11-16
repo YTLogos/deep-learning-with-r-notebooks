@@ -32,7 +32,7 @@ This repository contains R Markdown notebooks implementing the code samples foun
 
 MIT License
 
-Copyright (c) 2017 François Chollet
+Copyright (c) 2017 François Chollet  
 Copyright (c) 2017 J.J. Allaire
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
