@@ -21,7 +21,7 @@ This repository contains R Markdown notebooks implementing the code samples foun
 | 6.2: Understanding recurrent neural networks | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.2-understanding-recurrent-neural-networks.nb.html) | [R Markdown (Rmd)](notebooks/6.2-understanding-recurrent-neural-networks.Rmd)  |
 | 6.4: Sequence processing with convnets | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.4-sequence-processing-with-convnets.nb.html) | [R Markdown (Rmd)](notebooks/6.4-sequence-processing-with-convnets.Rmd)  |
 | 8.1: Text generation with LSTM | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/8.1-text-generation-with-lstm.nb.html) | [R Markdown (Rmd)](notebooks/8.1-text-generation-with-lstm.Rmd)  |
-
+| 8.2: Deep Dream | [Notebook (HTML)](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/8.2-deep-dream.nb.html) | [R Markdown (Rmd)](notebooks/8.2-deep-dream.Rmd)  |
 
 ## LICENSE
 
