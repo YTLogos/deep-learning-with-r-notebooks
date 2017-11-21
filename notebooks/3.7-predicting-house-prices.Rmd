@@ -72,18 +72,15 @@ The prices are typically between \$10,000 and \$50,000. If that sounds cheap, re
 ## Preparing the data
 
 
-It would be problematic to feed into a neural network values that all take wildly different ranges. The network might be able to automatically adapt to such heterogeneous data, but it would definitely make learning more difficult. A widespread best practice to deal with such data is to do feature-wise normalization: for each feature in the input data (a column in the input data matrix), you subtract the mean of the feature and divide by the standard deviation, so that the feature is centered around 0 and has a unit standard deviation. This is easily done in R using the `scale()` function.
+It would be problematic to feed into a neural network values that all take wildly different ranges. The network might be able to automatically adapt to such heterogeneous data, but it would definitely make learning more difficult. A widespread best practice to deal with such data is to do feature-wise normalization: for each feature in the input data (a column in the input data matrix), you subtract the mean of the feature and divide by the standard deviation, so that the feature is centered around 0 and has a unit standard deviation.  This is easily done in R using the `center_and_scale()` function.
 
 ```{r}
-mean <- apply(train_data, 2, mean)
-train_data <- scale(train_data, center = mean, scale = FALSE)
-std <- apply(train_data, 2, sd)
-train_data <- scale(train_data, center = FALSE, scale = std)
-
-test_data <- scale(test_data, center = mean, scale = std)
+values <- fit_center_and_scale(train_data)
+train_data <- center_and_scale(train_data, values)
+test_data <- center_and_scale(test_data, values)
 ```
 
-Note that the quantities that we use for normalizing the test data have been computed using the training data. We should never use in our workflow any quantity computed on the test data, even for something as simple as data normalization.
+Note that we "fit" the mean and standard deviation used for normalization on the training data then apply it to both the training and test data. We should never use in our workflow any quantity computed on the test data, even for something as simple as data normalization.
 
 ## Building our network
 
@@ -160,7 +157,7 @@ all_scores
 mean(all_scores)
 ```
 
-As you can notice, the different runs do indeed show rather different validation scores, from 2.3 to 2.8. Their average (2.56) is a much more reliable metric than any single of these scores -- that's the entire point of K-fold cross-validation. In this case, we are off by \$2,550 on average, which is still significant considering that the prices range from \$10,000 to \$50,000. 
+As you can notice, the different runs do indeed show rather different validation scores, from 2.3 to 2.8. Their average (2.52) is a much more reliable metric than any single of these scores -- that's the entire point of K-fold cross-validation. In this case, we are off by \$2,550 on average, which is still significant considering that the prices range from \$10,000 to \$50,000. 
 
 Let's try training the network for a bit longer: 500 epochs. To keep a record of how well the model did at each epoch, we will modify our training loop to save the per-epoch validation score log:
 
@@ -240,7 +237,7 @@ result <- model %>% evaluate(test_data, test_targets)
 result
 ```
 
-We are still off by about \$2,840.
+We are still off by about \$2,680.
 
 ## Wrapping up
 

@@ -98,11 +98,8 @@ data <- read_csv(fname)
 data <- data.matrix(data[,-1])
 
 train_data <- data[1:200000,]
-mean <- apply(train_data, 2, mean)
-centered_data <- scale(train_data, center = mean, scale = FALSE)
-std <- apply(centered_data, 2, sd) 
-
-data <- scale(data, center = mean, scale = std)
+values <- fit_center_and_scale(train_data)
+data <- center_and_scale(data, values)
 
 generator <- function(data, lookback, delay, min_index, max_index,
                       shuffle = FALSE, batch_size = 128, step = 6) {

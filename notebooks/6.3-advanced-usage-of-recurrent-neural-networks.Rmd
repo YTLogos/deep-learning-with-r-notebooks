@@ -88,11 +88,8 @@ You'll then preprocess the data by subtracting the mean of each timeseries and d
 
 ```{r}
 train_data <- data[1:200000,]
-mean <- apply(train_data, 2, mean)
-centered_data <- scale(train_data, center = mean, scale = FALSE)
-std <- apply(centered_data, 2, sd) 
-
-data <- scale(data, center = mean, scale = std)
+values <- fit_center_and_scale(train_data)
+data <- center_and_scale(data, values)
 ```
 
 Now here is the data generator you'll use. It yields a list `(samples, targets)`, where `samples` is one batch of input data and `targets` is the corresponding array of target temperatures. It takes the following arguments:
