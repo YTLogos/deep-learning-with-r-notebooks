@@ -301,9 +301,10 @@ fname &lt;- file.path(data_dir, &quot;jena_climate_2009_2016.csv&quot;)
 data &lt;- read_csv(fname)
 data &lt;- data.matrix(data[,-1])
 train_data &lt;- data[1:200000,]
-values &lt;- fit_center_and_scale(train_data)
-data &lt;- center_and_scale(data, values)
-
+mean &lt;- apply(train_data, 2, mean)
+centered_data &lt;- scale(train_data, center = mean, scale = FALSE)
+std &lt;- apply(centered_data, 2, sd) 
+data &lt;- scale(data, center = mean, scale = std)
 generator &lt;- function(data, lookback, delay, min_index, max_index,
                       shuffle = FALSE, batch_size = 128, step = 6) {
   if (is.null(max_index))

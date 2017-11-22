@@ -275,8 +275,10 @@ ggplot(data, aes(x = 1:nrow(data), y = `T (degC)`)) + geom_line()</code></pre>
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHJhaW5fZGF0YSA8LSBkYXRhWzE6MjAwMDAwLF1cbm1lYW4gPC0gYXBwbHkodHJhaW5fZGF0YSwgMiwgbWVhbilcbmNlbnRlcmVkX2RhdGEgPC0gc2NhbGUodHJhaW5fZGF0YSwgY2VudGVyID0gbWVhbiwgc2NhbGUgPSBGQUxTRSlcbnN0ZCA8LSBhcHBseShjZW50ZXJlZF9kYXRhLCAyLCBzZCkgXG5kYXRhIDwtIHNjYWxlKGRhdGEsIGNlbnRlciA9IG1lYW4sIHNjYWxlID0gc3RkKVxuYGBgIn0= -->
 <pre class="r"><code>train_data &lt;- data[1:200000,]
-values &lt;- fit_center_and_scale(train_data)
-data &lt;- center_and_scale(data, values)
+mean &lt;- apply(train_data, 2, mean)
+centered_data &lt;- scale(train_data, center = mean, scale = FALSE)
+std &lt;- apply(centered_data, 2, sd) 
+data &lt;- scale(data, center = mean, scale = std)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
