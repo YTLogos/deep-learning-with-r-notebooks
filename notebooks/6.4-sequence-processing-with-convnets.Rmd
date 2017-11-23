@@ -99,9 +99,7 @@ data <- data.matrix(data[,-1])
 
 train_data <- data[1:200000,]
 mean <- apply(train_data, 2, mean)
-centered_data <- scale(train_data, center = mean, scale = FALSE)
-std <- apply(centered_data, 2, sd) 
-
+std <- apply(train_data, 2, sd)
 data <- scale(data, center = mean, scale = std)
 
 generator <- function(data, lookback, delay, min_index, max_index,

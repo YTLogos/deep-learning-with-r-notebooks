@@ -76,10 +76,8 @@ It would be problematic to feed into a neural network values that all take wildl
 
 ```{r}
 mean <- apply(train_data, 2, mean)
-train_data <- scale(train_data, center = mean, scale = FALSE)
 std <- apply(train_data, 2, sd)
-train_data <- scale(train_data, center = FALSE, scale = std)
-
+train_data <- scale(train_data, center = mean, scale = std)
 test_data <- scale(test_data, center = mean, scale = std)
 ```
 
