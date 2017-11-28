@@ -22,11 +22,10 @@ We will start from a convnet pre-trained on ImageNet. In Keras, we have many suc
 
 ```{r}
 library(keras)
-K <- backend()
 
 # We will not be training our model,
 # so we use this command to disable all training-specific operations
-K$set_learning_phase(0L)
+k_set_learning_phase(0)
 
 # Build the InceptionV3 network.
 # The model will be loaded with pre-trained ImageNet weights.
@@ -61,13 +60,13 @@ layer_dict <- model$layers
 names(layer_dict) <- lapply(layer_dict, function(layer) layer$name) 
 
 # Define the loss.
-loss <- K$variable(0) 
+loss <- k_variable(0) 
 for (layer_name in names(layer_contributions)) {
   # Add the L2 norm of the features of a layer to the loss.
   coeff <- layer_contributions[[layer_name]]
   activation <- layer_dict[[layer_name]]$output
-  scaling <- K$prod(K$cast(K$shape(activation), "float32"))
-  loss <- loss + (coeff * K$sum(K$square(activation)) / scaling)
+  scaling <- k_prod(k_cast(k_shape(activation), "float32"))
+  loss <- loss + (coeff * k_sum(k_square(activation)) / scaling)
 }
 ```
 
@@ -78,13 +77,13 @@ Now we can set up the gradient ascent process:
 dream <- model$input
 
 # Normalize gradients.
-grads <- K$gradients(loss, dream)[[1]]
-grads <- grads / K$maximum(K$mean(K$abs(grads)), 1e-7)
+grads <- k_gradients(loss, dream)[[1]]
+grads <- grads / k_maximum(k_mean(k_abs(grads)), 1e-7)
 
 # Set up function to retrieve the value
 # of the loss and gradients given an input image.
 outputs <- list(loss, grads)
-fetch_loss_and_grads <- K$`function`(list(dream), outputs)
+fetch_loss_and_grads <- k_function(list(dream), outputs)
 
 eval_loss_and_grads <- function(x) {
   outs <- fetch_loss_and_grads(list(x))

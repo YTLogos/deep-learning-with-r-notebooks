@@ -83,7 +83,6 @@ Let's start by defining the paths to the two images we consider: the style refer
 
 ```{r}
 library(keras)
-K <- backend()
 
 # This is the path to the image you want to transform.
 target_image_path <- "style_transfer/portrait.png" 
@@ -124,20 +123,20 @@ deprocess_image <- function(x) {
 }
 ```
 
-Let's set up the VGG19 network. It takes as input a batch of three images: the style-reference image, the target image, and a placeholder that will contain the generated image. A placeholder is a symbolic tensor, the values of which are provided externally via R arrays. The style-reference and target image are static and thus defined using `K$constant`, whereas the values contained in the placeholder of the generated image will change over time.
+Let's set up the VGG19 network. It takes as input a batch of three images: the style-reference image, the target image, and a placeholder that will contain the generated image. A placeholder is a symbolic tensor, the values of which are provided externally via R arrays. The style-reference and target image are static and thus defined using `k_constant`, whereas the values contained in the placeholder of the generated image will change over time.
 
 ```{r}
-target_image <- K$constant(preprocess_image(target_image_path))
-style_reference_image <- K$constant(
+target_image <- k_constant(preprocess_image(target_image_path))
+style_reference_image <- k_constant(
   preprocess_image(style_reference_image_path)
 )
 
 # This placeholder will contain our generated image
-combination_image <- K$placeholder(c(1L, img_nrows, img_ncols, 3L)) 
+combination_image <- k_placeholder(c(1, img_nrows, img_ncols, 3)) 
 
 # We combine the 3 images into a single batch
-input_tensor <- K$concatenate(list(target_image, style_reference_image, 
-                                   combination_image), axis = 0L)
+input_tensor <- k_concatenate(list(target_image, style_reference_image, 
+                                   combination_image), axis = 1)
 
 # We build the VGG19 network with our batch of 3 images as input.
 # The model will be loaded with pre-trained ImageNet weights.
@@ -152,7 +151,7 @@ Let's define the content loss, meant to make sure that the top layer of the VGG1
 
 ```{r}
 content_loss <- function(base, combination) {
-  K$sum(K$square(combination - base))
+  k_sum(k_square(combination - base))
 }
 ```
 
@@ -160,8 +159,8 @@ Now, here's the style loss. It leverages an auxiliary function to compute the Gr
 
 ```{r}
 gram_matrix <- function(x) {
-  features <- K$batch_flatten(K$permute_dimensions(x, list(2L, 0L, 1L)))
-  gram <- K$dot(features, K$transpose(features))
+  features <- k_batch_flatten(k_permute_dimensions(x, c(3, 1, 2)))
+  gram <- k_dot(features, k_transpose(features))
   gram
 }
 
@@ -170,7 +169,7 @@ style_loss <- function(style, combination){
   C <- gram_matrix(combination)
   channels <- 3
   size <- img_nrows*img_ncols
-  K$sum(K$square(S - C)) / (4 * channels^2  * size^2)
+  k_sum(k_square(S - C)) / (4 * channels^2  * size^2)
 }
 ```
 
@@ -181,9 +180,9 @@ total_variation_loss <- function(x) {
   y_ij  <- x[,1:(img_nrows - 1L), 1:(img_ncols - 1L),]
   y_i1j <- x[,2:(img_nrows), 1:(img_ncols - 1L),]
   y_ij1 <- x[,1:(img_nrows - 1L), 2:(img_ncols),]
-  a <- K$square(y_ij - y_i1j)
-  b <- K$square(y_ij - y_ij1)
-  K$sum(K$pow(a + b, 1.25))
+  a <- k_square(y_ij - y_i1j)
+  b <- k_square(y_ij - y_ij1)
+  k_sum(k_pow(a + b, 1.25))
 }
 ```
 
@@ -210,7 +209,7 @@ style_weight <- 1.0
 content_weight <- 0.025
 
 # Define the loss by adding all components to a `loss` variable
-loss <- K$variable(0.0) 
+loss <- k_variable(0.0) 
 layer_features <- outputs_dict[[content_layer]] 
 target_image_features <- layer_features[1,,,]
 combination_features <- layer_features[3,,,]
@@ -239,10 +238,10 @@ It would be inefficient to compute the value of the loss function and the value 
 
 ```{r}
 # Get the gradients of the generated image wrt the loss
-grads <- K$gradients(loss, combination_image)[[1]] 
+grads <- k_gradients(loss, combination_image)[[1]] 
 
 # Function to fetch the values of the current loss and the current gradients
-fetch_loss_and_grads <- K$`function`(list(combination_image), list(loss, grads))
+fetch_loss_and_grads <- k_function(list(combination_image), list(loss, grads))
 
 eval_loss_and_grads <- function(image) {
   image <- array_reshape(image, c(1, img_nrows, img_ncols, 3))

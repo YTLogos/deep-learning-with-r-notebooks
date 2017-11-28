@@ -158,14 +158,13 @@ all_scores
 mean(all_scores)
 ```
 
-As you can notice, the different runs do indeed show rather different validation scores, from 2.3 to 2.8. Their average (2.56) is a much more reliable metric than any single of these scores -- that's the entire point of K-fold cross-validation. In this case, we are off by \$2,550 on average, which is still significant considering that the prices range from \$10,000 to \$50,000. 
+As you can notice, the different runs do indeed show rather different validation scores, from 2.1 to 2.6. Their average (2.37) is a much more reliable metric than any single of these scores -- that's the entire point of K-fold cross-validation. In this case, we are off by \$2,375 on average, which is still significant considering that the prices range from \$10,000 to \$50,000. 
 
 Let's try training the network for a bit longer: 500 epochs. To keep a record of how well the model did at each epoch, we will modify our training loop to save the per-epoch validation score log:
 
 ```{r}
 # Some memory clean-up
-K <- backend()
-K$clear_session()
+k_clear_session()
 ```
 
 ```{r, echo=TRUE, results='hide'}
@@ -238,7 +237,7 @@ result <- model %>% evaluate(test_data, test_targets)
 result
 ```
 
-We are still off by about \$2,840.
+We are still off by about \$2,680.
 
 ## Wrapping up
 

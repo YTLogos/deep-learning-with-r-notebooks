@@ -176,7 +176,6 @@ The process is simple: we will build a loss function that maximizes the value of
 
 ```{r}
 library(keras)
-K <- backend()
 
 model <- application_vgg16(
   weights = "imagenet", 
@@ -187,28 +186,28 @@ layer_name <- "block3_conv1"
 filter_index <- 1
 
 layer_output <- get_layer(model, layer_name)$output
-loss <- K$mean(layer_output[,,,filter_index])
+loss <- k_mean(layer_output[,,,filter_index])
 ```
 
-To implement gradient descent, we will need the gradient of this loss with respect to the model's input. To do this, we will use the `gradients` function packaged with the `backend` module of Keras:
+To implement gradient descent, we will need the gradient of this loss with respect to the model's input. To do this, we will use the `k_gradients` Keras backend function:
 
 ```{r}
 # The call to `gradients` returns a list of tensors (of size 1 in this case)
 # hence we only keep the first element -- which is a tensor.
-grads <- K$gradients(loss, model$input)[[1]] 
+grads <- k_gradients(loss, model$input)[[1]] 
 ```
 
 A non-obvious trick to use for the gradient descent process to go smoothly is to normalize the gradient tensor, by dividing it by its L2 norm (the square root of the average of the square of the values in the tensor). This ensures that the magnitude of the updates done to the input image is always within a same range.
 
 ```{r}
 # We add 1e-5 before dividing so as to avoid accidentally dividing by 0.
-grads <- grads / (K$sqrt(K$mean(K$square(grads))) + 1e-5)
+grads <- grads / (k_sqrt(k_mean(k_square(grads))) + 1e-5)
 ```
 
 Now you need a way to compute the value of the loss tensor and the gradient tensor, given an input image. You can define a Keras backend function to do this: `iterate` is a function that takes a tensor (as a list of tensors of size 1) and returns a list of two  tensors: the loss value and the gradient value.
 
 ```{r}
-iterate <- K$`function`(list(model$input), list(loss, grads))
+iterate <- k_function(list(model$input), list(loss, grads))
 
 # Let's test it
 c(loss_value, grads_value) %<-%
@@ -260,16 +259,16 @@ generate_pattern <- function(layer_name, filter_index, size = 150) {
   # Build a loss function that maximizes the activation
   # of the nth filter of the layer considered.
   layer_output <- model$get_layer(layer_name)$output
-  loss <- K$mean(layer_output[,,,filter_index]) 
+  loss <- k_mean(layer_output[,,,filter_index]) 
   
   # Compute the gradient of the input picture wrt this loss
-  grads <- K$gradients(loss, model$input)[[1]]
+  grads <- k_gradients(loss, model$input)[[1]]
   
   # Normalization trick: we normalize the gradient
-  grads <- grads / (K$sqrt(K$mean(K$square(grads))) + 1e-5)
+  grads <- grads / (k_sqrt(k_mean(k_square(grads))) + 1e-5)
   
   # This function returns the loss and grads given the input picture
-  iterate <- K$`function`(list(model$input), list(loss, grads))
+  iterate <- k_function(list(model$input), list(loss, grads))
   
   # We start from a gray image with some noise
   input_img_data <- 
@@ -367,8 +366,7 @@ We'll demonstrate this technique using the pretrained VGG16 network again.
 
 ```{r}
 # Clear out the session
-K <- backend()
-K$clear_session()
+k_clear_session()
 
 # Note that we are including the densely-connected classifier on top;
 # all previous times, we were discarding it.
@@ -429,17 +427,17 @@ last_conv_layer <- model %>% get_layer("block5_conv3")
 
 # This is the gradient of the "african elephant" class with regard to
 # the output feature map of `block5_conv3`
-grads <- K$gradients(african_elephant_output, last_conv_layer$output)[[1]]
+grads <- k_gradients(african_elephant_output, last_conv_layer$output)[[1]]
 
 # This is a vector of shape (512,), where each entry
 # is the mean intensity of the gradient over a specific feature map channel
-pooled_grads <- K$mean(grads, axis = c(0L, 1L, 2L))
+pooled_grads <- k_mean(grads, axis = c(1, 2, 3))
 
 # This function allows us to access the values of the quantities we just defined:
 # `pooled_grads` and the output feature map of `block5_conv3`,
 # given a sample image
-iterate <- K$`function`(list(model$input),
-                        list(pooled_grads, last_conv_layer$output[1,,,])) 
+iterate <- k_function(list(model$input),
+                      list(pooled_grads, last_conv_layer$output[1,,,])) 
 
 # These are the values of these two quantities, as arrays,
 # given our sample image of two elephants

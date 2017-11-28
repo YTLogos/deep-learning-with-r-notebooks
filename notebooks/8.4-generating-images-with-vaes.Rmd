@@ -58,7 +58,6 @@ Here is the encoder network we will use: a very simple convnet which maps the in
 
 ```{r}
 library(keras)
-K <- backend()
 
 img_shape <- c(28, 28, 1)
 batch_size <- 16
@@ -76,7 +75,7 @@ x <- input_img %>%
   layer_conv_2d(filters = 64, kernel_size = 3, padding = "same", 
                 activation = "relu") 
 
-shape_before_flattening <- K$int_shape(x)
+shape_before_flattening <- k_int_shape(x)
 
 x <- x %>% 
   layer_flatten() %>% 
@@ -94,9 +93,9 @@ Next is the code for using `z_mean` and `z_log_var`, the parameters of the stati
 ```{r}
 sampling <- function(args) {
   c(z_mean, z_log_var) %<-% args
-  epsilon <- K$random_normal(shape = list(K$shape(z_mean)[1], latent_dim),
+  epsilon <- k_random_normal(shape = list(k_shape(z_mean)[1], latent_dim),
                              mean = 0, stddev = 1)
-  z_mean + K$exp(z_log_var) * epsilon
+  z_mean + k_exp(z_log_var) * epsilon
 }
 
 z <- list(z_mean, z_log_var) %>% 
@@ -107,7 +106,7 @@ This is the decoder implementation: we reshape the vector `z` to the dimensions 
 
 ```{r}
 # This is the input where we will feed `z`.
-decoder_input <- layer_input(K$int_shape(z)[-1])
+decoder_input <- layer_input(k_int_shape(z)[-1])
 
 x <- decoder_input %>% 
   # Upsample to the correct number of units
@@ -142,14 +141,14 @@ CustomVariationalLayer <- R6Class("CustomVariationalLayer",
   public = list(
     
     vae_loss = function(x, z_decoded) {
-      x <- K$flatten(x)
-      z_decoded <- K$flatten(z_decoded)
+      x <- k_flatten(x)
+      z_decoded <- k_flatten(z_decoded)
       xent_loss <- metric_binary_crossentropy(x, z_decoded)
-      kl_loss <- -5e-4 * K$mean(
-        1 + z_log_var - K$square(z_mean) - K$exp(z_log_var), 
+      kl_loss <- -5e-4 * k_mean(
+        1 + z_log_var - k_square(z_mean) - k_exp(z_log_var), 
         axis = -1L
       )
-      K$mean(xent_loss + kl_loss)
+      k_mean(xent_loss + kl_loss)
     },
     
     call = function(inputs, mask = NULL) {

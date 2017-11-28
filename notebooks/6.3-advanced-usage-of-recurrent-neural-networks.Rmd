@@ -504,8 +504,7 @@ A bidirectional RNN exploits this idea to improve upon the performance of chrono
 To instantiate a bidirectional RNN in Keras, you use the `bidirectional()` function, which takes a recurrent layer instance as an argument. The `bidirectional()` function creates a second, separate instance of this recurrent layer and uses one instance for processing the input sequences in chronological order and the other instance for processing the input sequences in reversed order. Let's try it on the IMDB sentiment-analysis task.
 
 ```{r}
-K <- backend()
-K$clear_session()
+k_clear_session()
 ```
 
 ```{r, echo=TRUE, results='hide'}
