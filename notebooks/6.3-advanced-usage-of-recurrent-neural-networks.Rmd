@@ -30,6 +30,21 @@ Until now, the only sequence data we have covered has been text data, for instan
 
 In this dataset, fourteen different quantities (such air temperature, atmospheric pressure, humidity, wind direction, etc.) are recorded every ten minutes, over several years. The original data goes back to 2003, but we limit ourselves to data from 2009-2016. This dataset is perfect for learning to work with numerical timeseries. We will use it to build a model that takes as input some data from the recent past (a few days worth of data points) and predicts the air temperature 24 hours in the future.
 
+Download and uncompress the data as follows:
+
+```{r, eval=FALSE, echo=TRUE}
+dir.create("~/Downloads/jena_climate", recursive = TRUE)
+download.file(
+  "https://s3.amazonaws.com/keras-datasets/jena_climate_2009_2016.csv.zip",
+  "~/Downloads/jena_climate/jena_climate_2009_2016.csv.zip"
+)
+unzip(
+  "~/Downloads/jena_climate/jena_climate_2009_2016.csv.zip",
+  exdir = "~/Downloads/jena_climate"
+)
+```
+
+
 Let's take a look at the data:
 
 ```{r}
